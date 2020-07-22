@@ -7,27 +7,36 @@
 // metal e jazz. In base a cosa scegliamo nella select vedremo i
 // corrispondenti cd.
 // Chiamata:
-// https:  //flynn.boolean.careers/exercises/api/array/music
+// https://flynn.boolean.careers/exercises/api/array/music
 
 $(document).ready(function() {
 
 
-
-
-
+showCd()
 
 
 });
 
-$.ajax(
-{
-url: "https://flynn.boolean.careers/exercises/api/array/music",
-method: "GET",
-success: function (data, stato) {
-$("#risultati").html(data);
-},
-error: function (richiesta, stato, errori) {
-alert("E' avvenuto un errore. " + errore);
+// FUNZIONI
+////////////////////////////////////////////
+
+function showCd() {
+    $.ajax({
+
+        url:'https://flynn.boolean.careers/exercises/api/array/music',
+        method:'GET',
+        success: function (data, stato) {
+        var album = data.response;
+        for (var i = 0; i < album.length; i++) {
+            var cd = album[i];
+            var source = $("#template").html();
+            var template = Handlebars.compile(source);
+            var html = template(cd);
+        $(".cds-container").append(html);
+      }
+    },
+    error: function(richiesta, stato, errore) {
+      alert("E' avvenuto un errore. " + errore);
+    }
+  });
 }
-}
-);
